@@ -1,6 +1,6 @@
 # Excalibur Startproject 2025
 
-- Megman Clone
+- Mijn game
 
 - Vanaf de HR repository: klik op ***USE THIS TEMPLATE***. Kies jouw eigen github account. 
 - Kopieer de `git url` van jouw eigen repository (dit vind je onder de "code" button).
