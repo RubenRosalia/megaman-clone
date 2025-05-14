@@ -15,7 +15,6 @@ export class Shark extends Actor {
     // Set the sprite directly on this actor.
     this.graphics.use(Resources.Shark.toSprite());
     
-    // Fix: Use instance properties instead of static class properties
     this.pos = new Vector(500, 300);
     this.vel = new Vector(-10, 0);
 
@@ -24,7 +23,7 @@ export class Shark extends Actor {
 
   hitSomething(event) {
     if (event.other.owner instanceof Fish) {
-        // Fix: Access addScore through the engine instance
+        // Access addScore through the engine instance
         this.scene.engine.addScore();
         
         // Reset fish position
