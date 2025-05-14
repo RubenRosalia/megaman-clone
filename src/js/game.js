@@ -1,6 +1,14 @@
+// Load style.
 import "../css/style.css";
-import { Actor, Engine, Vector, DisplayMode } from "excalibur";
+
+// Import engine related.
+import { Engine, Vector, DisplayMode, Actor, Label, FontUnit, Color } from "excalibur";
 import { Resources, ResourceLoader } from "./resources.js";
+
+// Load classes game.
+import { Fish } from "./fish.js";
+import { Shark } from "./shark.js";
+import { Background } from "./background.js";
 
 export class Game extends Engine {
   constructor() {
@@ -10,60 +18,53 @@ export class Game extends Engine {
       maxFps: 60,
       displayMode: DisplayMode.FitScreen,
     });
+
+    // Initialize score.
+    this.score = 0;
     this.start(ResourceLoader).then(() => this.startGame());
   }
 
   startGame() {
-    console.log("START THE GAME!");
+    // Add background with matching game dimensions.
+    // Gotta convert this into a class.
+    const background = new  Background();
 
-    // // Create initial fish.
-    // for (let i = 0; i < 30; i++) {
-    //   this.createFish();
-    //   this.createEnemy();
-    // }
+    this.add(background);
+
+    // Create multiple fish
+    for (let i = 0; i < 5; i++) {
+      const fish = new Fish();
+      this.add(fish);
+    }
+
+    // Create one Shark
+    const shark = new Shark();
+    this.add(shark);
+
+    // Create label.
+     this.label = new Label({
+        text: 'Score 0:',
+        score: '0',
+        pos: new Vector(0, 0),
+        font: Resources.PixelFont.toFont({
+            unit: FontUnit.Px,
+            size: 50,
+            color: Color.White
+        })
+    })
+    this.add(this.label)
   }
 
-  // Create fish.
-  createFish() {
-    const fish = new Actor();
-    fish.graphics.use(Resources.Fish.toSprite());
-    fish.pos = this.getRandomPosition();
-    fish.vel = this.getRandomVel();
-    fish.events.on("exitviewport", (e) => this.fishLeft(e));
-    this.add(fish);
-  }
+  addScore() {
 
-  // Create enemy.
-  createEnemy() {
-    const Enemy = new Actor();
-    Enemy.graphics.use(Resources.Enemy.toSprite());
-    Enemy.pos = this.getRandomPosition();
-    Enemy.vel = this.getRandomVel();
-    Enemy.events.on("exitviewport", (e) => this.fishLeft(e));
-    this.add(Enemy);
-  }
+    // Increase score by 10.
+    this.score += 1;
 
-  getRandomPosition() {
-    const x = Math.random() * 800;
-    const y = Math.random() * 600;
-    return new Vector(x, y);
-  }
+    // Update label text.
+    this.label.text = `Score: ${this.score}`;
 
-  getRandomVel() {
-    const up = Math.random() * 800;
-    const down = Math.random() * 600;
-    return new Vector(up,down);
-  }
-
-
-  fishLeft(e) {
-    // Remove the fish that left the screen.
-    e.target.kill();
-
-    // Display actors at random places.
-    this.createFish();
-    this.createEnemy();
-  }
+}
+  
 }
 
 new Game();

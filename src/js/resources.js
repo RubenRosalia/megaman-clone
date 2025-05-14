@@ -1,15 +1,16 @@
-import { ImageSource, Sound, Resource, Loader } from 'excalibur'
+import { ImageSource, Loader, Sound, FontSource } from 'excalibur'
 
-// voeg hier jouw eigen resources toe
 const Resources = {
-    Megaman: new ImageSource('images/megaman.png'),
-    Fish: new ImageSource('images/fish.png'),
-    Enemy: new ImageSource('images/enemy.png'),
+    Fish:  new ImageSource('/images/fish.png'),
+    Shark: new ImageSource('/images/shark.png'),
+    BG:    new ImageSource('/images/background.jpg'),
+    Eat:   new Sound('/sounds/eat.mp3'),
+    PixelFont: new FontSource('/fonts/wednesday.ttf', 'PressStart')
 }
 
-const ResourceLoader = new Loader()
-for (let res of Object.values(Resources)) {
-    ResourceLoader.addResource(res)
+const ResourceLoader = new Loader();
+for (const res of Object.values(Resources)) {
+    ResourceLoader.addResource(res);
 }
 
 export { Resources, ResourceLoader }
