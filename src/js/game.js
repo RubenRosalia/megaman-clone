@@ -9,6 +9,7 @@ import { Resources, ResourceLoader } from "./resources.js";
 import { Fish } from "./fish.js";
 import { Shark } from "./shark.js";
 import { Background } from "./background.js";
+import { UI } from "./ui.js";
 
 export class Game extends Engine {
   constructor() {
@@ -38,31 +39,20 @@ export class Game extends Engine {
     }
 
     // Create one Shark
-    const shark = new Shark();
-    this.add(shark);
+    this.shark = new Shark();
+    this.add(this.shark);
 
-    // Create label.
-     this.label = new Label({
-        text: 'Score 0:',
-        score: '0',
-        pos: new Vector(0, 0),
-        font: Resources.PixelFont.toFont({
-            unit: FontUnit.Px,
-            size: 50,
-            color: Color.White
-        })
-    })
-    this.add(this.label)
+    this.ui = new UI();
+    this.add(this.ui);
+
   }
 
   addScore() {
-
-    // Increase score by 10.
+    // Increase score by 1
     this.score += 1;
-
-    // Update label text.
-    this.label.text = `Score: ${this.score}`;
-
+    
+    // Update score display using UI class
+    this.ui.updateScore(this.score);
 }
   
 }
