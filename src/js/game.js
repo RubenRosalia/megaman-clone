@@ -2,14 +2,13 @@
 import "../css/style.css";
 
 // Import engine related.
-import { Engine, Vector, DisplayMode, Actor, Label, FontUnit, Color } from "excalibur";
+import { Engine, Vector, DisplayMode } from "excalibur";
 import { Resources, ResourceLoader } from "./resources.js";
-
-// Load classes game.
 import { Fish } from "./fish.js";
 import { Shark } from "./shark.js";
 import { Background } from "./background.js";
 import { UI } from "./ui.js";
+import { Mine } from "./mine.js";
 
 export class Game extends Engine {
   constructor() {
@@ -20,41 +19,41 @@ export class Game extends Engine {
       displayMode: DisplayMode.FitScreen,
     });
 
-    // Initialize score.
+    // Initialize score
     this.score = 0;
+    
+    // Start the resource loader
     this.start(ResourceLoader).then(() => this.startGame());
   }
 
   startGame() {
-    // Add background with matching game dimensions.
     // Gotta convert this into a class.
-    const background = new  Background();
+    this.background = new  Background();
 
-    this.add(background);
+    this.add(this.background);
 
     // Create multiple fish
     for (let i = 0; i < 5; i++) {
-      const fish = new Fish();
-      this.add(fish);
+      this.fish = new Fish();
+      this.add(this.fish);
     }
 
-    // Create one Shark
-    this.shark = new Shark();
-    this.add(this.shark);
+    // Create sharkOne + Add sharkOne game.
+    let sharkOne = new Shark("Gerald", 250, 225, "player-one");
+    this.add(sharkOne);
 
-    this.ui = new UI();
+    // Create sharkTwo + Add sharkTwo  game.
+    let sharkTwo = new Shark("Gerda", 400, 325, "player-two");
+    this.add(sharkTwo);
+
+    this.ui = new UI(sharkOne.name, sharkTwo.name);
     this.add(this.ui);
 
+    this.mine = new Mine();
+    this.add(this.mine);
+
   }
-
-  addScore() {
-    // Increase score by 1
-    this.score += 1;
-    
-    // Update score display using UI class
-    this.ui.updateScore(this.score);
-}
-  
 }
 
-new Game();
+
+const game = new Game();

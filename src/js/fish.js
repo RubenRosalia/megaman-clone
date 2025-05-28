@@ -16,13 +16,9 @@ export class Fish  extends Actor {
         this.pos = this.getRandomPosition();
         this.vel = this.getRandomVel();
 
-
-        // Listen for viewport exit on this instance
-
     }
 
     resetPosition() {
-        console.log("Was eaten by shark")
         this.pos = this.getRandomPosition();
         this.vel = this.getRandomVel();
     }
@@ -37,6 +33,11 @@ export class Fish  extends Actor {
         const x = (Math.random() - 0.5) * 200;
         const y = (Math.random() - 0.5) * 200;
         return new Vector(x, y);
+    }
+
+    wasEatenByShark() {
+        // Reset position after being eaten
+        this.resetPosition();
     }
 
 }
