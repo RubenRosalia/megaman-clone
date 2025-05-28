@@ -21,6 +21,8 @@ export class Game extends Engine {
 
     // Initialize score
     this.score = 0;
+
+    console.log("HELLO :D")
     
     // Start the resource loader
     this.start(ResourceLoader).then(() => this.startGame());
